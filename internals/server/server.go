@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/ngenohkevin/ngenohkev/components/layout"
 	"log/slog"
 	"net/http"
 	"os"
@@ -82,8 +83,10 @@ func (s *Server) healthCheckHandler(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) defaultHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	if _, err := w.Write([]byte("Hello World")); err != nil {
-		s.logger.Error("Failed to write response", slog.String("error", err.Error()))
+	homeTemplate := layout.Home()
+	err := homeTemplate.Render(r.Context(), w)
+	if err != nil {
+		s.logger.Error("Failed to render template", slog.String("error", err.Error()))
 	}
 
 }
