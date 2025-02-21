@@ -1,0 +1,13 @@
+{
+  "proxy": "localhost:9000",
+  "files": [
+    "static/css/styles.css",
+    "components/**/*.templ"
+  ],
+  "port": 3000,
+  "ui": {
+    "port": 3001
+  },
+  "reloadDelay": 500,
+  "logLevel": "debug"
+}
