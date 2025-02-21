@@ -84,7 +84,7 @@ func (s *Server) healthCheckHandler(w http.ResponseWriter, r *http.Request) {
 func (s *Server) defaultHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	homeTemplate := layout.Home()
-	err := homeTemplate.Render(r.Context(), w)
+	err := layout.Layout(homeTemplate, "Kevin's Blog", "/").Render(r.Context(), w)
 	if err != nil {
 		s.logger.Error("Failed to render template", slog.String("error", err.Error()))
 	}
