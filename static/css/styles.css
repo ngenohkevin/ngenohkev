@@ -807,25 +807,17 @@ select {
   margin: 1rem;
 }
 
-.m-10 {
-  margin: 2.5rem;
-}
-
 .m-8 {
   margin: 2rem;
+}
+
+.m-2 {
+  margin: 0.5rem;
 }
 
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
-}
-
-.mt-4 {
-  margin-top: 1rem;
-}
-
-.mt-6 {
-  margin-top: 1.5rem;
 }
 
 .block {
@@ -852,12 +844,12 @@ select {
   height: 100%;
 }
 
-.max-w-full {
-  max-width: 100%;
+.w-\[\FFFD\FFFD\FFFDHnt\>\] {
+  width: ���Hnt>;
 }
 
-.max-w-xl {
-  max-width: 36rem;
+.max-w-full {
+  max-width: 100%;
 }
 
 .flex-1 {
@@ -888,10 +880,6 @@ select {
   justify-content: flex-end;
 }
 
-.justify-center {
-  justify-content: center;
-}
-
 .justify-between {
   justify-content: space-between;
 }
@@ -908,34 +896,14 @@ select {
   border-width: 2px;
 }
 
-.border-orange-600 {
-  --tw-border-opacity: 1;
-  border-color: rgb(234 88 12 / var(--tw-border-opacity, 1));
-}
-
-.border-slate-800 {
-  --tw-border-opacity: 1;
-  border-color: rgb(30 41 59 / var(--tw-border-opacity, 1));
-}
-
 .border-slate-600 {
   --tw-border-opacity: 1;
   border-color: rgb(71 85 105 / var(--tw-border-opacity, 1));
 }
 
-.border-slate-700 {
-  --tw-border-opacity: 1;
-  border-color: rgb(51 65 85 / var(--tw-border-opacity, 1));
-}
-
 .bg-gray-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
-}
-
-.bg-slate-800 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(30 41 59 / var(--tw-bg-opacity, 1));
 }
 
 .bg-slate-900 {
@@ -948,14 +916,8 @@ select {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
-.bg-slate-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(71 85 105 / var(--tw-bg-opacity, 1));
-}
-
-.bg-orange-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 115 22 / var(--tw-bg-opacity, 1));
+.p-3 {
+  padding: 0.75rem;
 }
 
 .p-4 {
@@ -964,14 +926,6 @@ select {
 
 .p-8 {
   padding: 2rem;
-}
-
-.p-2 {
-  padding: 0.5rem;
-}
-
-.p-3 {
-  padding: 0.75rem;
 }
 
 .px-5 {
@@ -989,14 +943,6 @@ select {
   padding-bottom: 1rem;
 }
 
-.pb-4 {
-  padding-bottom: 1rem;
-}
-
-.pt-4 {
-  padding-top: 1rem;
-}
-
 .text-center {
   text-align: center;
 }
@@ -1005,9 +951,9 @@ select {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .text-lg {
@@ -1015,9 +961,14 @@ select {
   line-height: 1.75rem;
 }
 
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .font-bold {
@@ -1076,8 +1027,9 @@ select {
     padding: 3rem;
   }
 
-  .md\:text-center {
-    text-align: center;
+  .md\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 
   .md\:text-3xl {
@@ -1085,19 +1037,14 @@ select {
     line-height: 2.25rem;
   }
 
-  .md\:text-xl {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
+  .md\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
   }
 
   .md\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
-  }
-
-  .md\:text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
   }
 }
 
