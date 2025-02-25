@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/ngenohkevin/ngenohkev/components/layout"
+	"github.com/ngenohkevin/ngenohkev/components/pages"
 	"log/slog"
 	"net/http"
 	"os"
@@ -43,6 +44,8 @@ func (s *Server) Start() error {
 	//handle the route
 	router.HandleFunc("/health", s.healthCheckHandler)
 	router.HandleFunc("/", s.defaultHandler)
+	router.HandleFunc("/about", s.about)
+	router.HandleFunc("/projects", s.projects)
 
 	s.httpServer = &http.Server{
 		Addr:    fmt.Sprintf(":%d", s.port),
@@ -89,4 +92,22 @@ func (s *Server) defaultHandler(w http.ResponseWriter, r *http.Request) {
 		s.logger.Error("Failed to render template", slog.String("error", err.Error()))
 	}
 
+}
+
+func (s *Server) about(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	aboutTemplate := pages.About()
+	err := layout.Layout(aboutTemplate, "About Kevin", "/about").Render(r.Context(), w)
+	if err != nil {
+		s.logger.Error("Failed to render template", slog.String("error", err.Error()))
+	}
+}
+
+func (s *Server) projects(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	projectsTemplate := pages.Projects()
+	err := layout.Layout(projectsTemplate, "Projects", "/projects").Render(r.Context(), w)
+	if err != nil {
+		s.logger.Error("Failed to render template", slog.String("error", err.Error()))
+	}
 }
