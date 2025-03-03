@@ -23,89 +23,106 @@ templ footer() {
 }
 
 templ nav(activeLink string) {
-  <header x-data="{ open: false }" class="flex justify-between items-center bg-gray-100 dark:bg-gray-900 shadow">
-    <div class="flex justify-end items-end">
-      <a class="block text-sky-600 dark:text-sky-300" href="#">
-        <span class="sr-only">Home</span>
-      </a>
-    </div>
-    <div class="p-4 md:text-2xl text-md font-bold text-gray-900 dark:text-white font-serif">
+  <div x-data="{ mobileMenuOpen: false, darkMode: false }" class="relative">
+    <!-- Desktop navigation -->
+    <header class="hidden md:flex justify-between items-center bg-gray-100 dark:bg-gray-900 shadow">
+      <div class="flex justify-end items-end">
+        <a class="block text-sky-600 dark:text-sky-300" href="#">
+          <span class="sr-only">Home</span>
+        </a>
+      </div>
+      <div class="p-4 md:text-2xl text-md font-bold text-gray-900 dark:text-white font-serif">
+        <a class="text-gray-900 dark:text-white" href="/">
+          <span class="border-2 border-slate-600 p-3 rounded-md">NgenohKev</span>
+        </a>
+      </div>
+      <div class="flex flex-1 items-center justify-end p-4">
+        <nav aria-label="Global">
+          <ul class="flex items-center gap-6 text-lg">
+            <li>
+              if activeLink == "/" {
+                <a class="block rounded-md px-5 py-4 text-lg font-bold text-sky-600 transition" href="/">
+                  Home
+                </a>
+              } else {
+                <a class="block rounded-md px-5 py-4 text-lg font-bold text-white transition hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/">
+                  Home
+                </a>
+              }
+            </li>
+            <li>
+              if activeLink == "/about" {
+                <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-sky-600 transition" href="/about">
+                  About
+                </a>
+              } else {
+                <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-white transition hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/about">
+                  About
+                </a>
+              }
+            </li>
+            <li>
+              if activeLink == "/projects" {
+                <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-sky-600 transition" href="/projects">
+                  Projects
+                </a>
+              } else {
+                <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-white transition hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/projects">
+                  Projects
+                </a>
+              }
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Mobile top navigation bar -->
+    <header class="md:hidden flex justify-between items-center bg-gray-900 p-4">
       <a class="text-gray-900 dark:text-white" href="/">
-        <span class="border-2 border-slate-600 p-3 rounded-md">NgenohKev</span>
-      </a>
-    </div>
-    <!-- Burger menu for mobile -->
-    <div class="md:hidden">
-      <button @click="open = !open" type="button"
-        class="p-2 dark:bg-sky-500 dark:text-sky-800 text-sky-600 focus:outline-none rounded">
-        <template x-if="!open">
-          <img src="/static/img/burger-menu-right-svgrepo-com.svg" alt="Open Menu" class="w-6 h-6" />
-        </template>
-        <template x-if="open">
-          <img src="/static/img/cancel-svgrepo-com.svg" alt="Close Menu" class="w-6 h-6" />
-        </template>
+               <span class="border-2 border-slate-600 p-3 rounded-md">NgenohKev</span>
+             </a>
+      <!-- Mobile hamburger menu button -->
+      <button
+        @click="mobileMenuOpen = !mobileMenuOpen"
+        class="text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
       </button>
-    </div>
-    <div class="flex flex-1 items-center justify-end p-4">
-      <nav aria-label="Global" class="hidden md:block">
-        <ul class="flex items-center gap-6 text-lg">
-          <li>
-            if activeLink == "/" {
-              <a class="block rounded-md px-5 py-4 text-lg font-bold text-sky-600 transition" href="/">
-                Home
-              </a>
-            } else {
-              <a class="block rounded-md px-5 py-4 text-lg font-bold text-white transition hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/">
-                Home
-              </a>
-            }
-          </li>
-          <li>
-            if activeLink == "/about" {
-              <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-sky-600 transition" href="/about">
-                About
-              </a>
-            } else {
-              <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-white transition hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/about">
-                About
-              </a>
-            }
-          </li>
-          <li>
-            if activeLink == "/projects" {
-              <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-sky-600 transition" href="/projects">
-                Projects
-              </a>
-            } else {
-              <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-white transition hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/projects">
-                Projects
-              </a>
-            }
-          </li>
-        </ul>
+    </header>
+
+    <!-- Mobile menu overlay -->
+    <div
+      x-show="mobileMenuOpen"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 bg-gray-100 dark:bg-gray-900 z-50 flex flex-col items-center justify-center md:hidden text-gray-900 dark:text-white">
+
+      <!-- Close button for mobile menu -->
+      <button
+        @click="mobileMenuOpen = false"
+        class="absolute top-4 right-4 text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <div class="text-center mb-8">
+        <h1 class="text-white text-2xl font-bold mb-4 p-3 border-2 border-slate-600 rounded-md">NgenohKev</h1>
+      </div>
+
+      <nav class="text-center space-y-6">
+        <a href="/" class="block text-white text-xl">Blog</a>
+        <a href="/projects" class="block text-white text-xl">Projects</a>
+        <a href="/about" class="block text-white text-xl">About</a>
       </nav>
     </div>
-    <!-- Mobile navigation menu -->
-    <nav x-show="open" class="md:hidden">
-      <ul class="flex flex-col">
-        <li>
-          <a class="block rounded-md px-5 py-4 text-lg font-bold hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/">
-            Home
-          </a>
-        </li>
-        <li>
-          <a class="block rounded-md px-5 py-2.5 text-lg font-bold hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/about">
-            About
-          </a>
-        </li>
-        <li>
-          <a class="block rounded-md px-5 py-2.5 text-lg font-bold hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/projects">
-            Projects
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+  </div>
 }
 
 templ Layout(contents templ.Component, title, activeLink string) {
