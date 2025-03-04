@@ -1,15 +1,27 @@
 package layout
 
+import "github.com/ngenohkevin/ngenohkev/components/pages"
+import "github.com/ngenohkevin/ngenohkev/internals/blog"
+
 templ Home() {
-    <section class="rounded-md border-slate-600">
-        <div class="p-8 md:p-12 lg:px-16">
-           <div class=" text-center">
-            <hr class="m-4">
-                <h2 class=" m-8 font-serif md:text-4xl font-bold text-gray-900 text-2xl dark:text-white">
-                    Welcome to Kevin's blog
-                </h2>
-            <hr class="m-4">
-           </div>
+    {{
+        posts, err := blog.ListPosts()
+        if err != nil {
+            posts = []*blog.Post{} // Empty slice if error
+        }
+    }}
+
+        <div class="min-h-screen bg-black text-white">
+            <div class="container mx-auto px-4 py-16">
+                <h1 class="sm:text-8xl text-6xl font-bold tracking-tight mb-16">NgenohKevin</h1>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="space-y-8">
+                        <h3 class="sm:text-4xl text-2xl font-bold">Recent blog posts</h3>
+
+                        @pages.RecentPosts(posts)
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
 }
