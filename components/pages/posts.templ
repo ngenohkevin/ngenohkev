@@ -1,0 +1,37 @@
+package pages
+
+import "github.com/ngenohkevin/ngenohkev/internals/blog"
+
+templ Posts(posts []*blog.Post) {
+    <div class="container mx-auto px-4">
+        <div class="p-8 md:p-12 lg:px-16 mb-8">
+           <div class="text-center">
+                <hr class="m-4"/>
+                    <h2 class="m-8 font-serif md:text-4xl font-bold text-gray-900 text-2xl dark:text-white">
+                      Blog Posts
+                    </h2>
+                <hr class="m-4"/>
+           </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            for _, post := range posts {
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <h2 class="text-xl font-semibold mb-2">
+                        <a href={templ.SafeURL("/posts/" + post.Slug)} class="text-blue-600 hover:text-blue-800">
+                            { post.Title }
+                        </a>
+                    </h2>
+                    <div class="text-gray-600 mb-3">
+                        { post.Date.Format("January 2, 2006") }
+                    </div>
+                    <div class="text-gray-700">
+                        @templ.Raw(post.Summary)
+                    </div>
+                    <a href={templ.SafeURL("/posts/" + post.Slug)} class="mt-4 inline-block text-blue-600 hover:text-blue-800">
+                        Read more →
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+}
