@@ -6,10 +6,12 @@ import (
 	"fmt"
 	"github.com/ngenohkevin/ngenohkev/components/layout"
 	"github.com/ngenohkevin/ngenohkev/components/pages"
+	"github.com/ngenohkevin/ngenohkev/internals/blog"
 	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 )
 
@@ -46,6 +48,16 @@ func (s *Server) Start() error {
 	router.HandleFunc("/", s.defaultHandler)
 	router.HandleFunc("/about", s.about)
 	router.HandleFunc("/projects", s.projects)
+
+	// Blog routes
+	router.HandleFunc("/posts", s.postsListHandler)
+	router.HandleFunc("/posts/", func(writer http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/posts/" {
+			s.postsListHandler(writer, r)
+			return
+		}
+		s.postHandler(writer, r)
+	})
 
 	s.httpServer = &http.Server{
 		Addr:    fmt.Sprintf(":%d", s.port),
@@ -92,6 +104,45 @@ func (s *Server) defaultHandler(w http.ResponseWriter, r *http.Request) {
 		s.logger.Error("Failed to render template", slog.String("error", err.Error()))
 	}
 
+}
+
+func (s *Server) postHandler(w http.ResponseWriter, r *http.Request) {
+	//Extract slug from URL
+	slug := strings.TrimPrefix(r.URL.Path, "/posts/")
+
+	//Load the post
+	post, err := blog.LoadPost(slug)
+	if err != nil {
+		s.logger.Error("Failed to load post", slog.String("slug", slug), slog.String("error", err.Error()))
+		http.NotFound(w, r)
+		return
+	}
+
+	//Render post template
+	postTemplate := pages.Post(post)
+	err = layout.Layout(postTemplate, post.Title, "/posts/"+slug).Render(r.Context(), w)
+	if err != nil {
+		s.logger.Error("Failed to render post template", slog.String("error", err.Error()))
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+	}
+}
+
+func (s *Server) postsListHandler(w http.ResponseWriter, r *http.Request) {
+	// List all posts
+	posts, err := blog.ListPosts()
+	if err != nil {
+		s.logger.Error("Failed to list posts", slog.String("error", err.Error()))
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	// Render posts list template
+	postsTemplate := pages.Posts(posts)
+	err = layout.Layout(postsTemplate, "Blog Posts", "/posts").Render(r.Context(), w)
+	if err != nil {
+		s.logger.Error("Failed to render posts template", slog.String("error", err.Error()))
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+	}
 }
 
 func (s *Server) about(w http.ResponseWriter, r *http.Request) {
