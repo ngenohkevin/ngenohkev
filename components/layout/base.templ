@@ -51,6 +51,17 @@ templ nav(activeLink string) {
               }
             </li>
             <li>
+              if activeLink == "/posts" {
+                <a class="block rounded-md px-5 py-4 text-lg font-bold text-sky-600 transition" href="/posts">
+                  Posts
+                </a>
+              } else {
+                <a class="block rounded-md px-5 py-4 text-lg font-bold text-white transition hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/posts">
+                  Posts
+                </a>
+              }
+            </li>
+            <li>
               if activeLink == "/about" {
                 <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-sky-600 transition" href="/about">
                   About
@@ -113,11 +124,11 @@ templ nav(activeLink string) {
       </button>
 
       <div class="text-center mb-8">
-        <h1 class="text-white text-2xl font-bold mb-4 p-3 border-2 border-slate-600 rounded-md">NgenohKev</h1>
+        <a href="/" class="text-white text-2xl font-bold mb-4 p-3 border-2 border-slate-600 rounded-md">NgenohKev</a>
       </div>
 
       <nav class="text-center space-y-6">
-        <a href="/" class="block text-white text-xl">Blog</a>
+        <a href="/posts" class="block text-white text-xl">Blog</a>
         <a href="/projects" class="block text-white text-xl">Projects</a>
         <a href="/about" class="block text-white text-xl">About</a>
       </nav>
