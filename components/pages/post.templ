@@ -1,0 +1,14 @@
+package pages
+
+import "github.com/ngenohkevin/ngenohkev/internals/blog"
+
+
+
+templ Post(post *blog.Post) {
+  <article class="prose lg:prose-xl mx-auto px-4 ">
+    <h1 class="text-gray-100 font-sans font-bold">{ post.Title }</h1>
+    <div class="post-content text-slate-100">
+        @templ.Raw(post.ContentHTML)
+    </div>
+  </article>
+}
