@@ -13,7 +13,7 @@ templ RecentPosts(posts []*blog.Post) {
 
         for _, post := range posts {
             <a href={ templ.SafeURL("/posts/" + post.Slug) } class="block group">
-                <div class="flex items-center justify-between hover:bg-gray-900 p-4 mx-4 rounded-lg transition-colors">
+                <div class="flex items-center justify-between bg-slate-800 hover:bg-gray-900 p-4 mx-4 rounded-lg transition-colors">
                     <div>
                         <div class="text-sm text-gray-400 mb-2">
                             { post.Date.Format("Monday, 2 Jan 2006") }
