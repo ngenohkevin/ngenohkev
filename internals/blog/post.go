@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/yuin/goldmark"
+	highlighting "github.com/yuin/goldmark-highlighting/v2"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/renderer/html"
@@ -30,16 +31,27 @@ func LoadPost(slug string) (*Post, error) {
 	if err != nil {
 		return nil, fmt.Errorf("post not found: %w", err)
 	}
-
-	// Extract the first line as the title, removing the # if present
+	// Split the content into lines to extract title and modify content
 	lines := strings.Split(string(content), "\n")
-	title := strings.TrimPrefix(lines[0], "# ")
+	var title, summary string
+	if len(lines) > 0 && strings.HasPrefix(lines[0], "#") {
+		title = strings.TrimSpace(strings.TrimPrefix(lines[0], "#"))
+		// Remove the title line for HTML conversion
+		content = []byte(strings.Join(lines[1:], "\n"))
+	}
 
-	//convert markdown to HTML
 	md := goldmark.New(
-		goldmark.WithExtensions(extension.GFM),
+		goldmark.WithExtensions(extension.GFM,
+			highlighting.NewHighlighting(
+				highlighting.WithStyle("rrt"),
+			),
+		),
 		goldmark.WithParserOptions(parser.WithAutoHeadingID()),
-		goldmark.WithRendererOptions(html.WithHardWraps(), html.WithXHTML(), html.WithUnsafe()),
+		goldmark.WithRendererOptions(
+			html.WithHardWraps(),
+			html.WithXHTML(),
+			html.WithUnsafe(), // Allow raw HTML
+		),
 	)
 	var buf bytes.Buffer
 	if err := md.Convert(content, &buf); err != nil {
@@ -48,10 +60,6 @@ func LoadPost(slug string) (*Post, error) {
 
 	contentHTML := buf.String()
 
-	// Creates a summary of the first paragraph of 100 chars
-	//summary := contentHTML
-	//Find the first meaningful paragraph for summary
-	var summary string
 	for _, line := range lines[1:] {
 		trimmed := strings.TrimSpace(line)
 		if trimmed != "" && !strings.HasPrefix(trimmed, "!") && !strings.HasPrefix(trimmed, "#") {
