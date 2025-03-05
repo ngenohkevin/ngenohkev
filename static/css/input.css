@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* In your input.css or Tailwind configuration */
+.prose {
+    @apply text-gray-300; /* Light text on dark background */
+}
+
+.prose code {
+    @apply bg-gray-800 text-gray-200 rounded px-1 py-0.5;
+}
+
+.prose pre {
+    @apply bg-gray-800 text-gray-200 rounded-lg p-4 overflow-x-auto;
+}
+
+.prose pre code {
+    @apply bg-transparent p-0;
+}
+
+.prose h1, .prose h2, .prose h3 {
+    @apply text-white;
+}
+
+.prose ul {
+    @apply list-disc list-inside text-gray-300;
+}
