@@ -3,7 +3,7 @@ package pages
 import "github.com/ngenohkevin/ngenohkev/internals/blog"
 
 templ Posts(posts []*blog.Post) {
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-4 mb-4">
         <div class="p-8 md:p-12 lg:px-16 mb-8">
            <div class="text-center">
                 <hr class="m-4"/>
@@ -15,7 +15,7 @@ templ Posts(posts []*blog.Post) {
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             for _, post := range posts {
-                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <div class="bg-gray-300 cursor-auto hover:bg-slate-300 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                     <h2 class="text-xl font-semibold mb-2">
                         <a href={templ.SafeURL("/posts/" + post.Slug)} class="text-blue-600 hover:text-blue-800">
                             { post.Title }
