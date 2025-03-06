@@ -4,7 +4,7 @@ import "github.com/ngenohkevin/ngenohkev/internals/blog"
 import "strings"
 
 templ RecentPosts(posts []*blog.Post) {
-    <div class="space-y-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         if len(posts) == 0 {
             <div class="text-gray-500">
                 No posts found
@@ -13,8 +13,9 @@ templ RecentPosts(posts []*blog.Post) {
 
         for _, post := range posts {
             <a href={ templ.SafeURL("/posts/" + post.Slug) } class="block group">
-                <div class="flex items-center justify-between bg-slate-800 hover:bg-gray-900 p-4 mx-4 rounded-lg transition-colors">
-                    <div>
+                <div class=" bg-slate-700 hover:bg-gray-800 p-4 rounded-lg transition-colors">
+                    <img src={post.Image} alt={post.Title} class="w-full h-40 object-contain object-fit rounded-lg p-2"/>
+                    <div class="">
                         <div class="text-sm text-gray-400 mb-2">
                             { post.Date.Format("Monday, 2 Jan 2006") }
                         </div>
