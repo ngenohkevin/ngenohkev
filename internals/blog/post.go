@@ -22,6 +22,7 @@ type Post struct {
 	ContentHTML string
 	Date        time.Time
 	Summary     string
+	Image       string
 }
 
 func LoadPost(slug string) (*Post, error) {
@@ -31,13 +32,26 @@ func LoadPost(slug string) (*Post, error) {
 	if err != nil {
 		return nil, fmt.Errorf("post not found: %w", err)
 	}
+
 	// Split the content into lines to extract title and modify content
 	lines := strings.Split(string(content), "\n")
-	var title, summary string
+	var title, summary, image string
 	if len(lines) > 0 && strings.HasPrefix(lines[0], "#") {
 		title = strings.TrimSpace(strings.TrimPrefix(lines[0], "#"))
 		// Remove the title line for HTML conversion
 		content = []byte(strings.Join(lines[1:], "\n"))
+	}
+
+	// Extract the first image
+	for _, line := range lines {
+		if strings.HasPrefix(line, "![") && strings.Contains(line, "](") {
+			start := strings.Index(line, "](") + 2
+			end := strings.Index(line, ")")
+			if start > 1 && end > start {
+				image = line[start:end]
+				break
+			}
+		}
 	}
 
 	md := goldmark.New(
@@ -75,6 +89,7 @@ func LoadPost(slug string) (*Post, error) {
 		ContentHTML: contentHTML,
 		Date:        time.Now(),
 		Summary:     summary,
+		Image:       image,
 	}, nil
 }
 
