@@ -7,15 +7,15 @@ templ Posts(posts []*blog.Post) {
         <div class="p-8 md:p-12 lg:px-16 mb-8">
            <div class="text-center">
                 <hr class="m-4"/>
-                    <h2 class="m-8 font-serif md:text-4xl font-bold text-gray-900 text-2xl dark:text-white">
-                      Blog Posts
+                    <h2 class="m-8 font-serif md:text-4xl font-bold  text-2xl text-white">
+                        Blog Posts
                     </h2>
                 <hr class="m-4"/>
            </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             for _, post := range posts {
-                <div class="bg-gray-700 cursor-auto hover:bg-slate-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                <div class="group h-full bg-gray-700 cursor-auto hover:bg-slate-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow flex flex-col">
                     <img src={post.Image} alt={post.Title} class="w-full h-40 object-contain object-fit rounded-t-lg p-2"/>
                     <h2 class="text-xl font-semibold mb-2">
                         <a href={templ.SafeURL("/posts/" + post.Slug)} class="text-blue-400 hover:text-blue-600">
@@ -25,10 +25,10 @@ templ Posts(posts []*blog.Post) {
                     <div class="text-gray-300 mb-3">
                         { post.Date.Format("January 2, 2006") }
                     </div>
-                    <div class="text-gray-100">
+                    <div class="text-gray-100 flex-grow text-base">
                         @templ.Raw(post.Summary)
                     </div>
-                    <a href={templ.SafeURL("/posts/" + post.Slug)} class="mt-4 inline-block text-blue-400 hover:text-blue-600">
+                    <a href={templ.SafeURL("/posts/" + post.Slug)} class="mt-auto inline-block text-blue-400 hover:text-blue-600 ">
                         Read more →
                     </a>
                 </div>
