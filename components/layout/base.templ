@@ -13,9 +13,9 @@ templ header(title string) {
 }
 
 templ footer() {
-    <footer class="bg-white dark:bg-gray-800">
+    <footer class="bg-gray-800">
         <div class="container mx-auto p-4">
-            <p class="text-center text-gray-600 dark:text-gray-400">
+            <p class="text-center text-gray-400">
                 © 2025 Kevin's blog. All rights reserved.
             </p>
         </div>
@@ -25,14 +25,14 @@ templ footer() {
 templ nav(activeLink string) {
   <div x-data="{ mobileMenuOpen: false, darkMode: false }" class="relative">
     <!-- Desktop navigation -->
-    <header class="hidden md:flex justify-between items-center bg-gray-100 dark:bg-gray-900 shadow">
+    <header class="hidden md:flex justify-between items-center bg-gray-900 shadow">
       <div class="flex justify-end items-end">
         <a class="block text-sky-600 dark:text-sky-300" href="#">
           <span class="sr-only">Home</span>
         </a>
       </div>
-      <div class="p-4 md:text-2xl text-md font-bold text-gray-900 dark:text-white font-serif">
-        <a class="text-gray-900 dark:text-white" href="/">
+      <div class="p-4 md:text-2xl text-md font-bold text-white font-serif shadow-lg">
+        <a class="text-white" href="/">
           <span class="border-2 border-slate-600 p-3 rounded-md">NgenohKev</span>
         </a>
       </div>
@@ -90,8 +90,8 @@ templ nav(activeLink string) {
 
     <!-- Mobile top navigation bar -->
     <header class="md:hidden flex justify-between items-center bg-gray-900 p-4">
-      <a class="text-gray-900 dark:text-white" href="/">
-               <span class="border-2 border-slate-600 p-3 rounded-md">NgenohKev</span>
+      <a class="text-white" href="/">
+               <span class="border-2 border-slate-600 p-3 rounded-md shadow-lg">NgenohKev</span>
              </a>
       <!-- Mobile hamburger menu button -->
       <button
@@ -112,7 +112,7 @@ templ nav(activeLink string) {
       x-transition:leave="transition ease-in duration-150"
       x-transition:leave-start="opacity-100"
       x-transition:leave-end="opacity-0"
-      class="fixed inset-0 bg-gray-100 dark:bg-gray-900 z-50 flex flex-col items-center justify-center md:hidden text-gray-900 dark:text-white">
+      class="fixed inset-0 bg-gray-900 z-50 flex flex-col items-center justify-center md:hidden text-gray-900 dark:text-white">
 
       <!-- Close button for mobile menu -->
       <button
