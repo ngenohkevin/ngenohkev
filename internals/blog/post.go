@@ -77,7 +77,13 @@ func LoadPost(slug string) (*Post, error) {
 	for _, line := range lines[1:] {
 		trimmed := strings.TrimSpace(line)
 		if trimmed != "" && !strings.HasPrefix(trimmed, "!") && !strings.HasPrefix(trimmed, "#") {
-			summary = trimmed
+			//limit the number of words to 40
+			words := strings.Fields(trimmed)
+			if len(words) > 35 {
+				summary = strings.Join(words[:35], " ") + "....."
+			} else {
+				summary = trimmed
+			}
 			break
 		}
 	}
