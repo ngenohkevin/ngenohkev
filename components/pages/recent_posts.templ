@@ -10,7 +10,7 @@ templ RecentPosts(posts []*blog.Post) {
                 No posts found
             </div>
         }
-        for i, post := range posts {
+        for _, post := range posts {
             <a href={ templ.SafeURL("/posts/" + post.Slug) } class="block group h-full">
                 <div class="overflow-hidden shadow-lg hover:shadow-xl bg-slate-700 hover:bg-gray-800 p-4 rounded-lg transition-colors h-full flex flex-col">
                    <img src={post.Image} alt={post.Title} class="w-full h-40 object-contain object-fit rounded-lg p-2"/>
