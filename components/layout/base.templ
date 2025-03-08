@@ -16,7 +16,7 @@ templ footer() {
     <footer class="bg-gray-800">
         <div class="container mx-auto p-4">
             <p class="text-center text-gray-400">
-                © 2025 Kevin's blog. All rights reserved.
+                © 2025 ngenohkevin. Built with ❤️ using Go, Templ, Tailwind CSS, HTMX and Alpine.js
             </p>
         </div>
     </footer>
@@ -41,22 +41,22 @@ templ nav(activeLink string) {
           <ul class="flex items-center gap-6 text-lg">
             <li>
               if activeLink == "/" {
-                <a class="block rounded-md px-5 py-4 text-lg font-bold text-sky-600 transition" href="/">
+                <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-sky-600 transition" href="/">
                   Home
                 </a>
               } else {
-                <a class="block rounded-md px-5 py-4 text-lg font-bold text-white transition hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/">
+                <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-white transition hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/">
                   Home
                 </a>
               }
             </li>
             <li>
               if activeLink == "/posts" {
-                <a class="block rounded-md px-5 py-4 text-lg font-bold text-sky-600 transition" href="/posts">
+                <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-sky-600 transition" href="/posts">
                   Posts
                 </a>
               } else {
-                <a class="block rounded-md px-5 py-4 text-lg font-bold text-white transition hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/posts">
+                <a class="block rounded-md px-5 py-2.5 text-lg font-bold text-white transition hover:bg-sky-700 dark:hover:bg-sky-500 dark:hover:text-white" href="/posts">
                   Posts
                 </a>
               }
@@ -129,8 +129,8 @@ templ nav(activeLink string) {
 
       <nav class="text-center space-y-6">
         <a href="/posts" class="block text-white text-xl">Blog</a>
+        <a href="/about" class="block text-white text-xl">About Me</a>
         <a href="/projects" class="block text-white text-xl">Projects</a>
-        <a href="/about" class="block text-white text-xl">About</a>
       </nav>
     </div>
   </div>
