@@ -3,65 +3,34 @@ package pages
 templ About() {
     <section class="min-h-screen bg-[#111827] text-white font-['Dosis']">
         <!-- Hero Section -->
+        <div class="flex justify-end items-center flex-col mt-10">
+            <div class="text-xl sm:text-2xl font-light text-gray-300">Mastering</div>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-2">the art of</h1>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold flex items-center gap-2">
+                Backend <span class="text-blue-400">alchemy</span>
+                <span class="text-blue-400 animate-bounce">...</span>
+            </h1>
+            <p class="text-xl text-blue-300 mt-4">Fueled by passion for GO</p>
+        </div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
             <!-- Header with Logo and Introduction -->
-            <div class="flex justify-start items-start gap-2 mb-10">
-                <!-- Logo -->
-                <div class="flex lg:w-1/3 flex-shrink-0">
-                    <div class="w-32 h-32 sm:w-40 sm:h-40 relative">
-                        <svg viewBox="0 0 200 200" class="w-full h-full">
-                            <path d="M100,20 C60,20 20,60 20,100 C20,140 60,180 100,180 C140,180 180,140 180,100 C180,60 140,20 100,20 Z" fill="none" stroke="#f472b6" stroke-width="2"/>
-                            <path d="M70,50 C90,30 120,40 140,60 C160,80 165,120 145,150 C125,180 85,180 60,150 C35,120 50,70 70,50 Z" fill="none" stroke="#f472b6" stroke-width="4"/>
-                            <text x="100" y="110" font-family="Inter" font-weight="bold" font-size="60" fill="#f472b6" text-anchor="middle">KK</text>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Introduction -->
-                <div class="lg:w-2/3">
-                    <h2 class="text-lg sm:text-xl text-gray-300 mb-1 sm:mb-2">Hi, my name is</h2>
-                    <h1 class="text-blue-400 font-bold text-4xl">Kevin Kipngeno</h1>
-                    <div class="mb-6">
-                        <div class="text-xl sm:text-2xl font-light text-gray-300">Mastering</div>
-                        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-2">the art of</h1>
-                        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold flex items-center gap-2">
-                            Backend <span class="text-blue-400">alchemy</span>
-                            <span class="text-blue-400 animate-bounce">...</span>
-                        </h1>
-                    </div>
-                    <p class="text-sm sm:text-base text-blue-300 mb-12">Fueled by passion for GO</p>
-                </div>
-            </div>
+            <div class="flex justify-start flex-col items-baseline mb-20">
+                <h2 class="text-lg sm:text-xl text-gray-300 mb-1 sm:mb-2">Hi, my name is</h2>
+                <h1 class="text-blue-400 font-bold text-4xl">Kevin Kipngeno</h1>
+        </div>
 
             <!-- Software Engineer Section -->
             <div class="max-w-4xl">
                 <div class="flex flex-col space-y-6">
                     <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center">
-                        I'm a Software Engineer
+                        I'm a Software Developer
                         <span class="animate-pulse text-sky-200 ml-1">|</span>
                     </h2>
-
-                    <p class="text-lg sm:text-xl">
-                        Currently, I'm a Software Engineer at
-                        <span class="inline-flex items-center">
-                            <span class="bg-blue-600 text-white w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-xs mr-1">f</span>
-                            <span class="text-blue-400">Facebook</span>,
-                        </span>
-                    </p>
-
                     <div class="mt-8 space-y-4 text-gray-300">
                         <p class="text-base sm:text-lg">A self-taught UI/UX designer, functioning in the industry for 3+ years now.</p>
                         <p class="text-base sm:text-lg">I make meaningful and delightful digital products that create an equilibrium between user needs and business goals.</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- Mobile/Responsive Design Enhancements -->
-            <div class="hidden lg:block absolute top-20 right-8 z-10">
-                <div class="w-32 h-32 bg-blue-500 rounded-full opacity-10 blur-3xl"></div>
-            </div>
-            <div class="hidden lg:block absolute bottom-20 left-8 z-10">
-                <div class="w-40 h-40 bg-pink-500 rounded-full opacity-10 blur-3xl"></div>
             </div>
         </div>
     </section>
