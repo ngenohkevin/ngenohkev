@@ -1,35 +1,40 @@
 package pages
 
 templ About() {
-    <section class="min-h-screen bg-gray-900 text-white font-['Dosis'] px-4 py-8 md:px-6 md:py-12 flex flex-col justify-between">
-        <!-- Hero Section -->
-        <div class="container mx-auto flex flex-col items-center text-center mb-2 md:mb-16">
-            <div class="text-xl sm:text-2xl font-light text-gray-300 mb-1">Mastering</div>
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-2">the art of</h1>
-            <div class="text-4xl sm:text-5xl md:text-6xl font-bold flex items-center gap-2 flex-wrap justify-center">
-                Backend <span class="text-blue-400">alchemy</span>
-                <span class="text-blue-400 animate-pulse">...</span>
-            </div>
-            <p class="text-xl text-blue-300 mt-4">Fueled by passion for GO</p>
+    <section class="bg-gray-900 text-white font-['Dosis'] px-4 py-8 md:px-6 md:py-12 flex flex-col justify-between">
+        <div class="flex flex-col justify-center items-center w-full h-full">
+                <div class="text-xl sm:text-2xl font-light text-gray-300 mb-1">Mastering</div>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-2">the art of</h1>
+                <div class="text-4xl sm:text-5xl md:text-6xl font-bold flex items-center gap-2 flex-wrap justify-center">
+                    Backend <span class="text-blue-400">alchemy</span>
+                    <span class="text-blue-400 animate-pulse">...</span>
+                </div>
+                <p class="text-xl text-blue-300 mt-4">Fueled by passion for GO</p>
         </div>
 
-        <!-- Profile Section -->
-        <div class="container mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-12">
-            <div class="flex flex-col items-center md:items-start">
-                <h2 class="text-lg sm:text-xl text-gray-300 mb-1 sm:mb-2">Hi, my name is</h2>
-                <h1 class="text-blue-400 font-bold text-4xl mb-2">Kevin Kipngeno</h1>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center md:text-left">
-                    I'm a Software Developer
-                </h2>
-            </div>
-            <div class="max-w-xl">
-                <div class="space-y-6">
-                    <div class="space-y-4 text-gray-300">
-                        <p class="text-base sm:text-lg">A self-taught software developer</p>
-                        <p class="text-base sm:text-lg leading-relaxed">I make meaningful and delightful digital products that create an equilibrium between user needs and business goals.</p>
+         <div class=" h-screen text-gray-300">
+                    <div class="flex flex-col justify-center items-center w-full h-full">
+                        <div class="max-w-[1000px] w-full grid grid-cols-2 gap-8">
+                            <div class="sm:text-right pb-8 pl-4">
+                                <p class="text-4xl font-bold inline border-b-4 border-blue-400">
+                                    About
+                                </p>
+                            </div>
+                            <div></div>
+                        </div>
+                        <div class="max-w-[1000px] w-full grid sm:grid-cols-2 gap-8 px-4">
+                            <div class="sm:text-right text-4xl font-bold">
+                                <p>Hi. I'm Kev, nice to meet you. Please take a look around.</p>
+                            </div>
+                            <div class="">
+                                <p>I am passionate about building excellent software that improves
+                                    the lives of those around me. I specialize in creating software
+                                    for clients ranging from individuals and small-businesses all the
+                                    way to large enterprise corporations. What would you do if you had
+                                    a software expert available at your fingertips?</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
     </section>
 }
