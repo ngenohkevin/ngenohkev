@@ -1,40 +1,118 @@
 package pages
 
 templ About() {
-    <section class="bg-gray-900 text-white font-['Dosis'] px-4 py-8 md:px-6 md:py-12 flex flex-col justify-between">
-        <div class="flex flex-col justify-center items-center w-full h-full">
-                <div class="text-xl sm:text-2xl font-light text-gray-300 mb-1">Mastering</div>
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-2">the art of</h1>
-                <div class="text-4xl sm:text-5xl md:text-6xl font-bold flex items-center gap-2 flex-wrap justify-center">
-                    Backend <span class="text-blue-400">alchemy</span>
-                    <span class="text-blue-400 animate-pulse">...</span>
-                </div>
-                <p class="text-xl text-blue-300 mt-4">Fueled by passion for GO</p>
-        </div>
+    <section class="bg-gray-900 text-white font-['Dosis'] min-h-screen flex flex-col">
 
-         <div class=" h-screen text-gray-300">
-                    <div class="flex flex-col justify-center items-center w-full h-full">
-                        <div class="max-w-[1000px] w-full grid grid-cols-2 gap-8">
-                            <div class="sm:text-right pb-8 pl-4">
-                                <p class="text-4xl font-bold inline border-b-4 border-blue-400">
-                                    About
-                                </p>
+        <div class="container mx-auto px-4 py-16">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                <div class="w-full md:w-1/3">
+                    <div class="relative rounded-lg overflow-hidden shadow-xl bg-gradient-to-br from-blue-600 to-purple-700 p-1 animate-pulse">
+                        <div class="bg-gray-800 rounded-lg p-8 relative overflow-hidden h-full">
+                            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500/20 to-purple-500/20"></div>
+                            <div class="relative z-10">
+                                <div class="container mx-auto flex flex-col items-center text-center">
+                                    <div class="text-xl sm:text-2xl font-light text-gray-300 mb-1">Mastering</div>
+                                    <h1 class="text-3xl sm:text-4xl font-bold mb-2">the art of</h1>
+                                    <div class="text-3xl sm:text-4xl font-bold flex items-center gap-2 flex-wrap justify-center">
+                                        Backend <span class="text-blue-400">alchemy</span>
+                                        <span class="text-blue-400 animate-pulse">...</span>
+                                    </div>
+                                    <p class="text-xl text-blue-300 mt-4">Fueled by a passion for GO</p>
+                                </div>
                             </div>
-                            <div></div>
-                        </div>
-                        <div class="max-w-[1000px] w-full grid sm:grid-cols-2 gap-8 px-4">
-                            <div class="sm:text-right text-4xl font-bold">
-                                <p>Hi. I'm Kev, nice to meet you. Please take a look around.</p>
-                            </div>
-                            <div class="">
-                                <p>I am passionate about building excellent software that improves
-                                    the lives of those around me. I specialize in creating software
-                                    for clients ranging from individuals and small-businesses all the
-                                    way to large enterprise corporations. What would you do if you had
-                                    a software expert available at your fingertips?</p>
-                            </div>
+                            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/10 rounded-full blur-xl"></div>
+                            <div class="absolute -top-10 -left-10 w-40 h-40 bg-purple-500/10 rounded-full blur-xl"></div>
                         </div>
                     </div>
                 </div>
+                <div class="w-full md:w-2/3">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">About Me</h1>
+                    <p class="text-gray-300 mb-6">
+                        As a passionate and experienced UI designer, I am dedicated to creating intuitive and engaging user experiences that meet the needs of my clients and their users. I have a strong understanding of design principles and a proficiency in design tools, and I am comfortable working with cross-functional teams to bring projects to fruition. I am confident in my ability to create designs that are both visually appealing and functional, and I am always looking for new challenges and opportunities to grow as a designer.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold mb-6 border-b-2 border-blue-400 pb-2 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">Skills:</h2>
+            <ul class="list-none pl-6 space-y-3 text-gray-300">
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>Extensive experience in UI design, with a strong portfolio of completed projects</span>
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>Proficiency in design tools such as Adobe Creative Suite and Sketch</span>
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>Excellent visual design skills, with a strong understanding of layout, color theory, and typography</span>
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>Ability to create wireframes and prototypes to communicate design concepts</span>
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>Strong communication and collaboration skills, with the ability to work effectively with cross-functional teams</span>
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>Experience conducting user research and gathering insights to inform design decisions</span>
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>Proficiency in HTML, CSS, and JavaScript</span>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="container mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold mb-6 border-b-2 border-blue-400 pb-2 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">Experience:</h2>
+            <ul class="list-none pl-6 space-y-3 text-gray-300">
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>5 years of experience as a UI designer, working on a variety of projects for clients in the tech and retail industries</span>
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>Led the design of a successful e-commerce website, resulting in a 25% increase in online sales</span>
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>Created wireframes and prototypes for a mobile banking app, leading to a 20% increase in app usage</span>
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>Conducted user research and usability testing to inform the redesign of a healthcare provider's website, resulting in a 15% increase in website traffic</span>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="container mx-auto px-4 py-8">
+            <h2 class="text-3xl font-bold mb-6 border-b-2 border-blue-400 pb-2 inline-block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">Education:</h2>
+            <ul class="list-none pl-6 space-y-3 text-gray-300">
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>Bachelor's degree in Graphic Design</span>
+                </li>
+                <li class="flex items-center gap-2">
+                    <span class="text-blue-400">•</span>
+                    <span>Certified User Experience Designer (CUED)</span>
+                </li>
+            </ul>
+        </div>
+
+
+        <footer class="mt-auto py-6 text-center text-gray-400">
+            <div class="flex justify-center space-x-4">
+                <a href="https://github.com/ngenohkevin" target="_blank" class="hover:text-blue-400 transition">Github</a>
+                <a href="mailto:ngenohkevin19@gmail.com" class="hover:text-blue-400 transition">Email</a>
+            </div>
+        </footer>
     </section>
 }
