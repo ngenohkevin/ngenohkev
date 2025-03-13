@@ -1,15 +1,104 @@
+// components/pages/projects.templ
 package pages
 
-templ Projects() {
-	 <section class="rounded-md border-slate-600">
-            <div class="p-8 md:p-12 lg:px-16">
-               <div class=" text-center">
-                <hr class="m-4">
-                    <h2 class=" m-8 font-serif md:text-4xl font-bold  text-2xl text-white">
-                        PROJECTS
-                    </h2>
-                <hr class="m-4">
-               </div>
-            </div>
-    </section>
+import (
+	"github.com/ngenohkevin/ngenohkev/internals/github"
+)
+
+// ProjectCard displays a single project
+templ ProjectCard(repo *github.Repo) {
+	<div class="bg-slate-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 duration-300 mb-8">
+		<a href={templ.SafeURL(repo.HtmlUrl)} target="_blank" rel="noopener noreferrer" class="block">
+			<div class="relative h-48 bg-slate-700 flex items-center justify-center overflow-hidden">
+				<!-- Project icon or image -->
+				<div class="flex items-center justify-center text-slate-500">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+					</svg>
+				</div>
+			</div>
+
+			<div class="p-6">
+				<div class="flex items-center justify-between">
+					<h3 class="text-xl font-bold text-white">{repo.Name}</h3>
+					<span class="text-blue-400">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M7 17L17 7M17 7H8M17 7V16" />
+						</svg>
+					</span>
+				</div>
+
+				<p class="mt-3 text-gray-300 text-sm h-16 overflow-hidden">
+					if repo.Description != "" {
+						{repo.Description}
+					} else {
+						A GitHub repository for {repo.Name}
+					}
+				</p>
+
+				<div class="mt-4 flex flex-wrap gap-2">
+					for _, lang := range repo.Languages {
+						<span class="inline-block rounded-full bg-slate-700 px-3 py-1 text-xs text-blue-300">{lang}</span>
+					}
+				</div>
+			</div>
+		</a>
+	</div>
+}
+
+// ProjectsList displays all projects
+templ ProjectsList(repos []*github.Repo) {
+	<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+		if len(repos) == 0 {
+			<div class="col-span-2 text-center p-8">
+				<p class="text-gray-400">No projects found</p>
+			</div>
+		} else {
+			for _, repo := range repos {
+				@ProjectCard(repo)
+			}
+		}
+	</div>
+}
+
+// Projects is the main projects page component
+templ Projects(repos []*github.Repo, err error) {
+	<section class="rounded-md border-slate-600">
+		<div class="p-8 md:p-12 lg:px-16">
+			<div class="text-center">
+				<hr class="m-4" />
+				<h2 class="m-8 font-serif md:text-4xl font-bold text-2xl text-white">
+					PROJECTS
+				</h2>
+				<hr class="m-4" />
+			</div>
+
+			if err != nil {
+				<div class="text-center p-8">
+					<p class="text-red-500">Failed to load projects. Please try again later.</p>
+				</div>
+			} else {
+				@ProjectsList(repos)
+			}
+		</div>
+	</section>
+}
+
+// LoadingProjects shows a loading indicator
+templ LoadingProjects() {
+	<section class="rounded-md border-slate-600">
+		<div class="p-8 md:p-12 lg:px-16">
+			<div class="text-center">
+				<hr class="m-4" />
+				<h2 class="m-8 font-serif md:text-4xl font-bold text-2xl text-white">
+					PROJECTS
+				</h2>
+				<hr class="m-4" />
+			</div>
+
+			<div class="flex justify-center items-center p-12">
+				<div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-400"></div>
+			</div>
+		</div>
+	</section>
 }
