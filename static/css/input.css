@@ -27,3 +27,19 @@
 .prose ul {
     @apply list-disc list-inside text-gray-300;
 }
+
+.project-card-container {
+    @apply transition-all duration-300;
+}
+
+.project-card-container:hover {
+    @apply -translate-y-1 shadow-xl;
+}
+
+/* Line clamp for descriptions */
+.project-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
