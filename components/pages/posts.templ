@@ -12,7 +12,9 @@ templ Posts(posts []*blog.Post) {
                     </h2>
                 <hr class="m-4"/>
            </div>
+
         </div>
+         <h3 class="sm:text-xl text-gray-400 text-lg font-serif font-bold mb-8">All blog posts</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             for _, post := range posts {
                 <div class="group h-full bg-gray-700 cursor-auto hover:bg-slate-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow flex flex-col">
