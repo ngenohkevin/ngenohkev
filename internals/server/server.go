@@ -7,6 +7,7 @@ import (
 	"github.com/ngenohkevin/ngenohkev/components/layout"
 	"github.com/ngenohkevin/ngenohkev/components/pages"
 	"github.com/ngenohkevin/ngenohkev/internals/blog"
+	"github.com/ngenohkevin/ngenohkev/internals/github"
 	"log/slog"
 	"net/http"
 	"os"
@@ -47,7 +48,7 @@ func (s *Server) Start() error {
 	router.HandleFunc("/health", s.healthCheckHandler)
 	router.HandleFunc("/", s.defaultHandler)
 	router.HandleFunc("/about", s.about)
-	router.HandleFunc("/projects", s.projects)
+	router.HandleFunc("/projects", s.handleProjects)
 
 	// Blog routes
 	router.HandleFunc("/posts", s.postsListHandler)
@@ -154,11 +155,15 @@ func (s *Server) about(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (s *Server) projects(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	projectsTemplate := pages.Projects()
-	err := layout.Layout(projectsTemplate, "Projects", "/projects").Render(r.Context(), w)
+func (s *Server) handleProjects(w http.ResponseWriter, r *http.Request) {
+	repos, err := github.GetRepos()
 	if err != nil {
-		s.logger.Error("Failed to render template", slog.String("error", err.Error()))
+		s.logger.Error("Error fetching github repos: ", slog.String("error", err.Error()))
+	}
+
+	component := layout.Layout(pages.Projects(repos, err), "Projects", "/projects")
+	err = component.Render(r.Context(), w)
+	if err != nil {
+		s.logger.Error("Failed to render page", slog.String("error", err.Error()))
 	}
 }
