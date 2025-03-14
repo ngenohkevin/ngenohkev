@@ -1,3 +1,4 @@
+date: 2025-03-10
 # Docker: Creating and Building Images
 ![Webserver Illustration](/static/img/docker-logo-blue.png)
 
