@@ -1,3 +1,4 @@
+date: 2025-03-07
 # Creating a Simple Webserver in Go
 
 ![Webserver Illustration](/static/img/go_mascot.png)
