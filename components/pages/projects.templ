@@ -48,7 +48,7 @@ templ ProjectCard(repo *github.Repo) {
 
 // ProjectsList displays all projects
 templ ProjectsList(repos []*github.Repo) {
-	<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+	<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
 		if len(repos) == 0 {
 			<div class="col-span-2 text-center p-8">
 				<p class="text-gray-400">No projects found</p>
