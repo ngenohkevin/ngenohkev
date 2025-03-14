@@ -1,3 +1,4 @@
+date:2025-03-08
 # How to Build a Simple Telegram Bot in Golang
 ![Webserver Illustration](/static/img/go_bot.png)
 This tutorial will guide you through building a simple telegram bot using Go.
