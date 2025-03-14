@@ -1634,6 +1634,10 @@ select {
   gap: 2rem;
 }
 
+.gap-4 {
+  gap: 1rem;
+}
+
 .space-x-4 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
@@ -2131,6 +2135,10 @@ select {
   start: end;
 }
 
+.\[v\:Ew\FFFD\FFFD\14-m\] {
+  v: Ew��-m;
+}
+
 /* In your input.css or Tailwind configuration */
 
 .prose {
@@ -2563,6 +2571,10 @@ select {
 
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .md\:flex-row {

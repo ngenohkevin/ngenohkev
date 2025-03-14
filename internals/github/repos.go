@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -36,19 +37,20 @@ var (
 
 // GetRepos fetches repos with caching
 func GetRepos() ([]*Repo, error) {
-
 	cacheMutex.RLock()
 	cacheValid := !lastCacheTime.IsZero() && time.Since(lastCacheTime) < cacheDuration
 	cacheMutex.RUnlock()
 
 	if cacheValid {
 		cacheMutex.RLock()
-		defer cacheMutex.RUnlock()
-
-		result := make([]*Repo, 0, len(repoCache))
-		for _, repo := range repoCache {
-			result = append(result, repo)
+		result := make([]*Repo, 0, len(RepoList))
+		// Use RepoList to maintain the defined order
+		for _, name := range RepoList {
+			if repo, exists := repoCache[name]; exists {
+				result = append(result, repo)
+			}
 		}
+		cacheMutex.RUnlock()
 		return result, nil
 	}
 
@@ -66,7 +68,15 @@ func GetRepos() ([]*Repo, error) {
 	}
 	cacheMutex.Unlock()
 
-	return repos, nil
+	// Ensure we return repos in the order defined by RepoList
+	orderedRepos := make([]*Repo, 0, len(RepoList))
+	for _, name := range RepoList {
+		if repo, exists := repoCache[name]; exists {
+			orderedRepos = append(orderedRepos, repo)
+		}
+	}
+
+	return orderedRepos, nil
 }
 
 // fetchAllRepos fetches all repos in parallel
@@ -102,8 +112,13 @@ func fetchAllRepos() ([]*Repo, error) {
 	}()
 
 	// Check for errors
-	if err := <-errorChan; err != nil {
-		return nil, err
+	select {
+	case err := <-errorChan:
+		if err != nil {
+			return nil, err
+		}
+	default:
+		// No errors
 	}
 
 	// Collect results
@@ -134,7 +149,12 @@ func fetchRepoInfo(repoName string) (*Repo, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			return
+		}
+	}(resp.Body)
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("GitHub API returned status: %s", resp.Status)
@@ -175,7 +195,12 @@ func fetchRepoLanguages(repoName string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			return
+		}
+	}(resp.Body)
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("GitHub API returned status: %s", resp.Status)
