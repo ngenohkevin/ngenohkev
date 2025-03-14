@@ -11,7 +11,9 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -25,21 +27,77 @@ type Post struct {
 	Image       string
 }
 
+// Define a regular expression for parsing date from frontmatter
+var dateRegex = regexp.MustCompile(`(?m)^date:\s*(.+)$`)
+
+// Add a cache to store posts
+var (
+	postCache    = make(map[string]*Post)
+	postCacheMux sync.RWMutex
+	cacheEnabled = true
+)
+
+func parseDate(content string) (time.Time, string) {
+	// Default date is now
+	date := time.Now()
+
+	// Look for date in frontmatter if there is any
+	if match := dateRegex.FindStringSubmatch(content); len(match) > 1 {
+		// Try to parse the date in various formats
+		formats := []string{
+			"2006-01-02",
+			"2006-01-02 15:04:05",
+			"January 2, 2006",
+			"Jan 2, 2006",
+			time.RFC3339,
+		}
+
+		for _, format := range formats {
+			if parsedDate, err := time.Parse(format, strings.TrimSpace(match[1])); err == nil {
+				date = parsedDate
+				// Remove the date line from content
+				content = dateRegex.ReplaceAllString(content, "")
+				break
+			}
+		}
+	}
+
+	// Clean up any leftover whitespace from removed frontmatter
+	content = strings.TrimSpace(content)
+
+	return date, content
+}
+
 func LoadPost(slug string) (*Post, error) {
-	//Check if posts exists
+	// Check cache first if enabled
+	if cacheEnabled {
+		postCacheMux.RLock()
+		if post, found := postCache[slug]; found {
+			postCacheMux.RUnlock()
+			return post, nil
+		}
+		postCacheMux.RUnlock()
+	}
+
+	// Check if post exists
 	postPath := filepath.Join("posts", slug+".md")
 	content, err := os.ReadFile(postPath)
 	if err != nil {
 		return nil, fmt.Errorf("post not found: %w", err)
 	}
 
+	contentStr := string(content)
+
+	// Parse date from content
+	date, contentAfterDateParsing := parseDate(contentStr)
+
 	// Split the content into lines to extract title and modify content
-	lines := strings.Split(string(content), "\n")
+	lines := strings.Split(contentAfterDateParsing, "\n")
 	var title, summary, image string
 	if len(lines) > 0 && strings.HasPrefix(lines[0], "#") {
 		title = strings.TrimSpace(strings.TrimPrefix(lines[0], "#"))
 		// Remove the title line for HTML conversion
-		content = []byte(strings.Join(lines[1:], "\n"))
+		contentAfterDateParsing = strings.Join(lines[1:], "\n")
 	}
 
 	// Extract the first image
@@ -67,17 +125,19 @@ func LoadPost(slug string) (*Post, error) {
 			html.WithUnsafe(), // Allow raw HTML
 		),
 	)
+
 	var buf bytes.Buffer
-	if err := md.Convert(content, &buf); err != nil {
+	if err := md.Convert([]byte(contentAfterDateParsing), &buf); err != nil {
 		return nil, fmt.Errorf("failed to convert markdown: %w", err)
 	}
 
 	contentHTML := buf.String()
 
+	// Extract summary from content
 	for _, line := range lines[1:] {
 		trimmed := strings.TrimSpace(line)
 		if trimmed != "" && !strings.HasPrefix(trimmed, "!") && !strings.HasPrefix(trimmed, "#") {
-			//limit the number of words to 40
+			//limit the number of words to 35
 			words := strings.Fields(trimmed)
 			if len(words) > 35 {
 				summary = strings.Join(words[:35], " ") + "....."
@@ -88,20 +148,33 @@ func LoadPost(slug string) (*Post, error) {
 		}
 	}
 
-	return &Post{
+	post := &Post{
 		Title:       title,
 		Slug:        slug,
-		Content:     string(content),
+		Content:     contentAfterDateParsing,
 		ContentHTML: contentHTML,
-		Date:        time.Now(),
+		Date:        date,
 		Summary:     summary,
 		Image:       image,
-	}, nil
+	}
+
+	// Store in cache if enabled
+	if cacheEnabled {
+		postCacheMux.Lock()
+		postCache[slug] = post
+		postCacheMux.Unlock()
+	}
+
+	return post, nil
 }
 
 func ListPosts() ([]*Post, error) {
 	var posts []*Post
+	var wg sync.WaitGroup
+	var mutex sync.Mutex
+	var globalErr error
 
+	// Process files in parallel
 	err := filepath.WalkDir("posts", func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -112,17 +185,69 @@ func ListPosts() ([]*Post, error) {
 			filename := filepath.Base(path)
 			slug := strings.TrimSuffix(filename, ".md")
 
-			post, err := LoadPost(slug)
-			if err != nil {
-				return err
-			}
-			posts = append(posts, post)
+			wg.Add(1)
+			go func(slug string) {
+				defer wg.Done()
+
+				post, err := LoadPost(slug)
+				if err != nil {
+					mutex.Lock()
+					globalErr = err
+					mutex.Unlock()
+					return
+				}
+
+				mutex.Lock()
+				posts = append(posts, post)
+				mutex.Unlock()
+			}(slug)
 		}
 
 		return nil
 	})
+
 	if err != nil {
 		return nil, fmt.Errorf("failed to list posts: %w", err)
 	}
+
+	wg.Wait()
+
+	if globalErr != nil {
+		return nil, globalErr
+	}
+
+	// Sort posts by date (most recent first)
+	sortPostsByDate(posts)
+
 	return posts, nil
+}
+
+// Helper function to sort posts by date (newest first)
+func sortPostsByDate(posts []*Post) {
+	for i := 0; i < len(posts)-1; i++ {
+		for j := i + 1; j < len(posts); j++ {
+			if posts[i].Date.Before(posts[j].Date) {
+				posts[i], posts[j] = posts[j], posts[i]
+			}
+		}
+	}
+}
+
+// Functions to manage caching
+
+// EnableCache turns on post caching
+func EnableCache() {
+	cacheEnabled = true
+}
+
+// DisableCache turns off post caching
+func DisableCache() {
+	cacheEnabled = false
+}
+
+// ClearCache removes all cached posts
+func ClearCache() {
+	postCacheMux.Lock()
+	postCache = make(map[string]*Post)
+	postCacheMux.Unlock()
 }
